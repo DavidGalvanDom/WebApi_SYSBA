@@ -6,12 +6,28 @@ using System.ComponentModel.DataAnnotations;
 
 namespace WebApi_SYSBA.Models
 {
+    /// <summary>
+    /// Usuario
+    /// </summary>
     public class Usuario
     {
-        public int usuarioId { get; set; }
+        /// <summary>
+        /// Identificador del usuario
+        /// </summary>
+        [Required]
+        public int UsuarioId { get; set; }
 
-        public string nombre { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Required]
+        public string Nombre { get; set; }
 
-        public string contrasena { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Required]
+        public string Contrasena { get; set; }
     }
 }
