@@ -7,27 +7,49 @@ using System.Web.Http;
 
 namespace WebApi_SYSBA.Controllers
 {
+    /// <summary>
+    /// Controlador del web api para el catalogo de Usuarios
+    /// </summary>    
+    [RoutePrefix("api/v{version}")]
     public class UsuarioController : ApiController
     {
         /// <summary>
-        /// 
+        /// Lista de todos los usuarios
         /// </summary>
         /// <returns></returns>
-        // GET: api/Usuario
+        // GET: api/v1/Usuario
         [HttpGet]
-        public IEnumerable<string> Get()
+        [Route ("Usuario")]
+        public IHttpActionResult Lista(string version)
         {
-            return new string[] { "value1", "value2" };
+            try
+            {
+                switch (version)
+                {
+                    case "1":
+                        return Ok(new string[] { version + "-value1", version + "-value2" });
+                    default:
+                        return BadRequest();
+                }
+
+            }
+            catch(Exception exp)
+            {
+                Utileria.RegistraLog(exp, "Detalle");
+                return InternalServerError();
+            }
+                       
         }
 
         /// <summary>
-        /// 
+        /// Solo el detalle del usuario con el id 
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         // GET: api/Usuario/5
+        [Route("Usuario/{id}")]
         [HttpGet]
-        public IHttpActionResult Get(int id)
+        public IHttpActionResult Detalle(int id)
         {
             try
             {
@@ -35,31 +57,51 @@ namespace WebApi_SYSBA.Controllers
             }
             catch(Exception exp)
             {
+                Utileria.RegistraLog(exp, "Detalle");
                 return InternalServerError();
             }
             
         }
 
         /// <summary>
-        /// 
+        /// Nuevo Usuario
         /// </summary>
         /// <param name="value"></param>
         // POST: api/Usuario
         [HttpPost]
-        public void Post([FromBody]Models.Usuario value)
+        public IHttpActionResult Crear([FromBody]Models.Usuario value)
         {
+            if(ModelState.IsValid)
+            {
+
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
+
         }
 
 
         /// <summary>
-        /// 
+        /// Modificar los datos de un usuario existente
         /// </summary>
         /// <param name="id"></param>
         /// <param name="value"></param>
         // PUT: api/Usuario/5
         [HttpPut]
-        public void Put(int id, [FromBody]Models.Usuario value)
+        public IHttpActionResult Actualizar(int id, [FromBody]Models.Usuario value)
         {
+            if (ModelState.IsValid)
+            {
+                return Ok();
+
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
 
         /// <summary>
@@ -68,8 +110,9 @@ namespace WebApi_SYSBA.Controllers
         /// <param name="id"></param>
         // DELETE: api/Usuario/5
         [HttpDelete]
-        public void Delete(int id)
+        public void Borrar(int id)
         {
+
         }
     }
 }
