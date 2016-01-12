@@ -23,11 +23,15 @@ namespace WebApi_SYSBA.Models
         [Required]
         public string Nombre { get; set; }
 
-
         /// <summary>
         /// 
         /// </summary>
         [Required]
         public string Contrasena { get; set; }
+
+        /// <summary>
+        /// Version del registro, menejo de concurrencia 
+        /// </summary>
+        public int Version { get; set; }
     }
 }
